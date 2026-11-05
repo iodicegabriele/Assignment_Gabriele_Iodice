@@ -1,0 +1,68 @@
+name: CI
+
+# Build, unit tests and Postman API tests on every push and pull request
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 27
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '27'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Unit tests and build
+        run: ./gradlew test bootJar --no-daemon
+
+      - name: Upload unit test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-report
+          path: build/reports/tests/test
+
+      - name: Start the service
+        run: |
+          nohup java -jar build/libs/*-SNAPSHOT.jar > app.log 2>&1 &
+          for i in $(seq 1 60); do
+            # any HTTP answer (even 404) means the server is up
+            if curl -s -o /dev/null localhost:8080/; then echo "Service up after ${i}s"; exit 0; fi
+            sleep 1
+          done
+          echo "Service did not start"; cat app.log; exit 1
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Postman API tests (Newman)
+        run: |
+          npx --yes newman@6 run AssessmentGabrieleIodice.postman_collection.json \
+            --env-var baseUrl=http://localhost:8080 \
+            --reporters cli,junit \
+            --reporter-junit-export newman-results.xml
+
+      - name: Service log
+        if: always()
+        run: cat app.log || true
+
+      - name: Upload Postman results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: postman-results
+          path: newman-results.xml
