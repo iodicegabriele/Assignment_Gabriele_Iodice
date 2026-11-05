@@ -1,6 +1,7 @@
 package com.gabriele.iodice.controllers;
 
 import com.gabriele.iodice.dtos.BetaFeedDTO;
+import com.gabriele.iodice.entities.Outcome;
 import com.gabriele.iodice.entities.impl.BetSettlementMessage;
 import com.gabriele.iodice.entities.impl.OddsChangeMessage;
 import com.gabriele.iodice.services.ConverterService;
@@ -18,6 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -37,7 +39,8 @@ class BetaFeedControllerTest {
     @Test
     void acceptsOddsAndDelegatesToConverter() throws Exception {
         when(converterService.Convert(any()))
-                .thenReturn(new OddsChangeMessage("ev456", new Double[]{1.95, 3.2, 4.0}));
+                .thenReturn(new OddsChangeMessage("ev456",
+                        Map.of(Outcome.HOME, 1.95, Outcome.DRAW, 3.2, Outcome.AWAY, 4.0)));
 
         mockMvc.perform(post(URL).contentType(MediaType.APPLICATION_JSON).content("""
                         {"type":"ODDS","event_id":"ev456","odds":{"home":1.95,"draw":3.2,"away":4.0}}
@@ -50,7 +53,7 @@ class BetaFeedControllerTest {
 
     @Test
     void acceptsSettlementAndDelegatesToConverter() throws Exception {
-        when(converterService.Convert(any())).thenReturn(new BetSettlementMessage("ev456", 2));
+        when(converterService.Convert(any())).thenReturn(new BetSettlementMessage("ev456", Outcome.AWAY));
 
         mockMvc.perform(post(URL).contentType(MediaType.APPLICATION_JSON).content("""
                         {"type":"SETTLEMENT","event_id":"ev456","result":"away"}
@@ -101,5 +104,19 @@ class BetaFeedControllerTest {
                         """))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string(containsString("not supported")));
+    }
+
+    @Test
+    void rejectsWrongHttpMethodWithMethodNotAllowed() throws Exception {
+        mockMvc.perform(get(URL))
+                .andExpect(status().isMethodNotAllowed());
+    }
+
+    @Test
+    void rejectsNonJsonContentWithUnsupportedMediaType() throws Exception {
+        mockMvc.perform(post(URL).contentType(MediaType.TEXT_PLAIN).content("odds"))
+                .andExpect(status().isUnsupportedMediaType());
+
+        verify(converterService, never()).Convert(any());
     }
 }

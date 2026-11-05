@@ -1,6 +1,7 @@
 package com.gabriele.iodice.services.impl;
 
 import com.gabriele.iodice.dtos.AlphaFeedDTO;
+import com.gabriele.iodice.entities.Outcome;
 import com.gabriele.iodice.entities.StandardMessage;
 import com.gabriele.iodice.entities.impl.BetSettlementMessage;
 import com.gabriele.iodice.entities.impl.OddsChangeMessage;
@@ -12,50 +13,28 @@ import java.util.Map;
 @Service
 public class AlphaConverterService implements ConverterService<AlphaFeedDTO> {
 
-    public static final String ONE = "1";
-    public static final String X = "X";
-    public static final String TWO = "2";
-
     public static final String ODDS_UPDATE = "odds_update";
     public static final String SETTLEMENT = "settlement";
 
+    /// Provider Alpha keys mapped to the standard outcomes
+    private static final Map<String, Outcome> OUTCOMES = Map.of(
+            "1", Outcome.HOME,
+            "X", Outcome.DRAW,
+            "2", Outcome.AWAY);
+
+    private static final String ODDS_FORMAT = """
+            "values" MUST be in the format {"1": 2.0, "X": 3.1, "2": 3.8}""";
+
     @Override
     public StandardMessage Convert(AlphaFeedDTO message) {
-        StandardMessage convertedMessage;
         if (ODDS_UPDATE.equals(message.msg_type())) {
-            convertedMessage = new OddsChangeMessage(message.event_id(), getScores(message.values()));
+            return new OddsChangeMessage(message.event_id(),
+                    OutcomeMapper.toOdds(message.values(), OUTCOMES, ODDS_FORMAT));
         }
-        else if(SETTLEMENT.equals(message.msg_type())) {
-            convertedMessage = new BetSettlementMessage(message.event_id(), getOutcome(message.outcome()));
+        if (SETTLEMENT.equals(message.msg_type())) {
+            return new BetSettlementMessage(message.event_id(),
+                    OutcomeMapper.toOutcome(message.outcome(), OUTCOMES, "outcome"));
         }
-        else throw new IllegalArgumentException("Alpha Feed message type not supported");
-        return convertedMessage;
-    }
-
-    private Double[] getScores(Map<String,Double> values) {
-        Double[] newScores = new Double[3];
-        if(values.containsKey(ONE) && values.containsKey(X) && values.containsKey(TWO)) {
-            newScores[0] = values.get(ONE);
-            newScores[1] = values.get(X);
-            newScores[2] = values.get(TWO);
-        }
-        else throw new IllegalArgumentException("""
-                New Scores MUST be in the format \
-                "values": {
-                "1": 2.0,
-                "X": 3.1,
-                "2": 3.8
-                }""");
-        return newScores;
-    }
-
-    private int getOutcome(String outcome) {
-        return switch (outcome) {
-            case ONE -> 1;
-            case X -> 0;
-            case TWO -> 2;
-            case null, default ->
-                    throw new IllegalArgumentException("This should never happen, the validation is on the DTO");
-        };
+        throw new IllegalArgumentException("Alpha Feed message type not supported: " + message.msg_type());
     }
 }

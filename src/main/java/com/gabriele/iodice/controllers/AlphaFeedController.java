@@ -29,6 +29,6 @@ public class AlphaFeedController {
         //logging the converted message as asked by the exercise
         log.info("\n**************************\n{}\n**************************", message.toString());
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
