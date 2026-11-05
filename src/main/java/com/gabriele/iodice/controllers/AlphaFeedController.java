@@ -22,12 +22,12 @@ public class AlphaFeedController {
 
     @PostMapping("/provider-alpha/feed")
     public ResponseEntity<Void> oddsChangeService(@Valid @RequestBody AlphaFeedDTO body){
-        log.info("Provider Alpha invoked {}", body);
+        log.debug("Provider Alpha invoked {}", body);
 
         StandardMessage message = converterService.Convert(body);
 
         //logging the converted message as asked by the exercise
-        log.info(message.toString());
+        log.info("\n**************************\n{}\n**************************", message.toString());
 
         return ResponseEntity.noContent().build();
     }

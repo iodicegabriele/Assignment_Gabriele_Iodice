@@ -23,12 +23,12 @@ public class BetaFeedController {
 
     @PostMapping("/provider-beta/feed")
     public ResponseEntity<Void> betaService(@Valid @RequestBody BetaFeedDTO body){
-        log.info("Provider Beta invoked {}", body);
+        log.debug("Provider Beta invoked {}", body);
 
         StandardMessage message = converterService.Convert(body);
 
         //logging the converted message as asked by the exercise
-        log.info(message.toString());
+        log.info("\n**************************\n{}\n**************************", message.toString());
 
         return ResponseEntity.noContent().build();
     }

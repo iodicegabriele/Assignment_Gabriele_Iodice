@@ -7,116 +7,1298 @@
   },
   "item": [
     {
-      "name": "AlphaFeed_ODD_UPDATE",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"msg_type\": \"odds_update\",\r\n    \"event_id\": \"ev123\",\r\n    \"values\": {\r\n        \"1\": 2.0,\r\n        \"X\": 3.1,\r\n        \"2\": 3.8\r\n    }\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
+      "name": "Valid messages",
+      "description": "The sample messages of the assignment: every one must be accepted.",
+      "item": [
+        {
+          "name": "AlphaFeed_ODD_UPDATE",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Message accepted with 204 No Content\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});",
+                  "",
+                  "pm.test(\"No response body\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"\");",
+                  "});"
+                ]
+              }
             }
-          }
-        },
-        "url": {
-          "raw": "localhost:8080/provider-alpha/feed",
-          "host": [
-            "localhost"
           ],
-          "port": "8080",
-          "path": [
-            "provider-alpha",
-            "feed"
-          ]
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"msg_type\": \"odds_update\",\n    \"event_id\": \"ev123\",\n    \"values\": {\n        \"1\": 2.0,\n        \"X\": 3.1,\n        \"2\": 3.8\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-alpha/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-alpha",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "AlphaFeed_BET_SETTLEMENT",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Message accepted with 204 No Content\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});",
+                  "",
+                  "pm.test(\"No response body\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"msg_type\": \"settlement\",\n    \"event_id\": \"ev123\",\n    \"outcome\": \"X\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-alpha/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-alpha",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "BetaFeed_ODDS_UPDATES",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Message accepted with 204 No Content\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});",
+                  "",
+                  "pm.test(\"No response body\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"ODDS\",\n    \"event_id\": \"ev456\",\n    \"odds\": {\n        \"home\": 1.95,\n        \"draw\": 3.2,\n        \"away\": 4.0\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-beta/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-beta",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "BetaFeed_BET_SETTLEMENT",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Message accepted with 204 No Content\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});",
+                  "",
+                  "pm.test(\"No response body\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"SETTLEMENT\",\n    \"event_id\": \"ev456\",\n    \"result\": \"away\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-beta/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-beta",
+                "feed"
+              ]
+            }
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
     },
     {
-      "name": "AlphaFeed_BET_SETTLEMENT",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"msg_type\": \"settlement\",\r\n    \"event_id\": \"ev123\",\r\n    \"outcome\": \"X\" // One of \"1\", \"X\", or \"2\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
+      "name": "Alpha - invalid input",
+      "description": "Every request must be rejected with 400 and the expected error message.",
+      "item": [
+        {
+          "name": "Alpha_INVALID_OUTCOME",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "const errors = pm.response.json();",
+                  "",
+                  "pm.test(\"outcome: Possible outcomes can only be 1|X|2\", function () {",
+                  "    pm.expect(errors).to.have.property(\"outcome\", \"Possible outcomes can only be 1|X|2\");",
+                  "});",
+                  "",
+                  "pm.test(\"Only the expected fields are reported\", function () {",
+                  "    pm.expect(Object.keys(errors)).to.have.members([\"outcome\"]);",
+                  "});"
+                ]
+              }
             }
-          }
-        },
-        "url": {
-          "raw": "localhost:8080/provider-alpha/feed",
-          "host": [
-            "localhost"
           ],
-          "port": "8080",
-          "path": [
-            "provider-alpha",
-            "feed"
-          ]
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"msg_type\": \"settlement\",\n    \"event_id\": \"ev123\",\n    \"outcome\": \"Y\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-alpha/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-alpha",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Alpha_MISSING_MSG_TYPE_AND_EVENT_ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "const errors = pm.response.json();",
+                  "",
+                  "pm.test(\"msg_type: msg_type is mandatory\", function () {",
+                  "    pm.expect(errors).to.have.property(\"msg_type\", \"msg_type is mandatory\");",
+                  "});",
+                  "",
+                  "pm.test(\"event_id: event_id is mandatory\", function () {",
+                  "    pm.expect(errors).to.have.property(\"event_id\", \"event_id is mandatory\");",
+                  "});",
+                  "",
+                  "pm.test(\"Only the expected fields are reported\", function () {",
+                  "    pm.expect(Object.keys(errors)).to.have.members([\"msg_type\",\"event_id\"]);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"outcome\": \"1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-alpha/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-alpha",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Alpha_BLANK_EVENT_ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "const errors = pm.response.json();",
+                  "",
+                  "pm.test(\"event_id: event_id is mandatory\", function () {",
+                  "    pm.expect(errors).to.have.property(\"event_id\", \"event_id is mandatory\");",
+                  "});",
+                  "",
+                  "pm.test(\"Only the expected fields are reported\", function () {",
+                  "    pm.expect(Object.keys(errors)).to.have.members([\"event_id\"]);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"msg_type\": \"settlement\",\n    \"event_id\": \"   \",\n    \"outcome\": \"1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-alpha/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-alpha",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Alpha_UNKNOWN_MSG_TYPE",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is \\\"Alpha Feed message type not supported: odds_delete\\\"\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"Alpha Feed message type not supported: odds_delete\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"msg_type\": \"odds_delete\",\n    \"event_id\": \"ev123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-alpha/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-alpha",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Alpha_ODDS_WITHOUT_VALUES",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is \\\"\\\"values\\\" MUST be in the format {\\\"1\\\": 2.0, \\\"X\\\": 3.1, \\\"2\\\": 3.8}\\\"\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"\\\"values\\\" MUST be in the format {\\\"1\\\": 2.0, \\\"X\\\": 3.1, \\\"2\\\": 3.8}\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"msg_type\": \"odds_update\",\n    \"event_id\": \"ev123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-alpha/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-alpha",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Alpha_ODDS_MISSING_OUTCOME_KEY",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is \\\"\\\"values\\\" MUST be in the format {\\\"1\\\": 2.0, \\\"X\\\": 3.1, \\\"2\\\": 3.8}\\\"\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"\\\"values\\\" MUST be in the format {\\\"1\\\": 2.0, \\\"X\\\": 3.1, \\\"2\\\": 3.8}\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"msg_type\": \"odds_update\",\n    \"event_id\": \"ev123\",\n    \"values\": {\n        \"1\": 2.0,\n        \"2\": 3.8\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-alpha/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-alpha",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Alpha_ODDS_WITH_BETA_KEYS",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is \\\"\\\"values\\\" MUST be in the format {\\\"1\\\": 2.0, \\\"X\\\": 3.1, \\\"2\\\": 3.8}\\\"\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"\\\"values\\\" MUST be in the format {\\\"1\\\": 2.0, \\\"X\\\": 3.1, \\\"2\\\": 3.8}\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"msg_type\": \"odds_update\",\n    \"event_id\": \"ev123\",\n    \"values\": {\n        \"home\": 2.0,\n        \"draw\": 3.1,\n        \"away\": 3.8\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-alpha/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-alpha",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Alpha_ODDS_NULL_VALUE",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is \\\"Odds for \\\"X\\\" MUST be a number greater than 1.0\\\"\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"Odds for \\\"X\\\" MUST be a number greater than 1.0\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"msg_type\": \"odds_update\",\n    \"event_id\": \"ev123\",\n    \"values\": {\n        \"1\": 2.0,\n        \"X\": null,\n        \"2\": 3.8\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-alpha/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-alpha",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Alpha_ODDS_NOT_GREATER_THAN_ONE",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is \\\"Odds for \\\"1\\\" MUST be a number greater than 1.0\\\"\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"Odds for \\\"1\\\" MUST be a number greater than 1.0\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"msg_type\": \"odds_update\",\n    \"event_id\": \"ev123\",\n    \"values\": {\n        \"1\": 1.0,\n        \"X\": 3.1,\n        \"2\": 3.8\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-alpha/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-alpha",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Alpha_SETTLEMENT_WITHOUT_OUTCOME",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is \\\"outcome is mandatory for settlement messages\\\"\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"outcome is mandatory for settlement messages\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"msg_type\": \"settlement\",\n    \"event_id\": \"ev123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-alpha/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-alpha",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Alpha_MALFORMED_JSON",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Message contains \\\"JSON parse error\\\"\", function () {",
+                  "    pm.expect(pm.response.text()).to.include(\"JSON parse error\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"msg_type\": \"settlement\",\n    \"event_id\": \"ev123\",\n    \"outcome\": \n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-alpha/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-alpha",
+                "feed"
+              ]
+            }
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
     },
     {
-      "name": "BetaFeed_ODDS_UPDATES",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "// ODDS_CHANGE message\r\n{\r\n    \"type\": \"ODDS\",\r\n    \"event_id\": \"ev456\",\r\n    \"odds\": {\r\n        \"home\": 1.95,\r\n        \"draw\": 3.2,\r\n        \"away\": 4.0\r\n    }\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
+      "name": "Beta - invalid input",
+      "description": "Every request must be rejected with 400 and the expected error message.",
+      "item": [
+        {
+          "name": "Beta_INVALID_RESULT",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "const errors = pm.response.json();",
+                  "",
+                  "pm.test(\"result: Possible outcomes can only be home|draw|away\", function () {",
+                  "    pm.expect(errors).to.have.property(\"result\", \"Possible outcomes can only be home|draw|away\");",
+                  "});",
+                  "",
+                  "pm.test(\"Only the expected fields are reported\", function () {",
+                  "    pm.expect(Object.keys(errors)).to.have.members([\"result\"]);",
+                  "});"
+                ]
+              }
             }
-          }
-        },
-        "url": {
-          "raw": "localhost:8080/provider-beta/feed",
-          "host": [
-            "localhost"
           ],
-          "port": "8080",
-          "path": [
-            "provider-beta",
-            "feed"
-          ]
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"SETTLEMENT\",\n    \"event_id\": \"ev456\",\n    \"result\": \"1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-beta/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-beta",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Beta_MISSING_TYPE_AND_EVENT_ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON\", function () {",
+                  "    pm.response.to.be.json;",
+                  "});",
+                  "",
+                  "const errors = pm.response.json();",
+                  "",
+                  "pm.test(\"type: type is mandatory\", function () {",
+                  "    pm.expect(errors).to.have.property(\"type\", \"type is mandatory\");",
+                  "});",
+                  "",
+                  "pm.test(\"event_id: event_id is mandatory\", function () {",
+                  "    pm.expect(errors).to.have.property(\"event_id\", \"event_id is mandatory\");",
+                  "});",
+                  "",
+                  "pm.test(\"Only the expected fields are reported\", function () {",
+                  "    pm.expect(Object.keys(errors)).to.have.members([\"type\",\"event_id\"]);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"result\": \"home\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-beta/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-beta",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Beta_UNKNOWN_TYPE",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is \\\"Beta Feed message type not supported: FOO\\\"\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"Beta Feed message type not supported: FOO\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"FOO\",\n    \"event_id\": \"ev456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-beta/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-beta",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Beta_ODDS_WITHOUT_ODDS",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is \\\"\\\"odds\\\" MUST be in the format {\\\"home\\\": 1.95, \\\"draw\\\": 3.2, \\\"away\\\": 4.0}\\\"\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"\\\"odds\\\" MUST be in the format {\\\"home\\\": 1.95, \\\"draw\\\": 3.2, \\\"away\\\": 4.0}\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"ODDS\",\n    \"event_id\": \"ev456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-beta/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-beta",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Beta_ODDS_MISSING_OUTCOME_KEY",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is \\\"\\\"odds\\\" MUST be in the format {\\\"home\\\": 1.95, \\\"draw\\\": 3.2, \\\"away\\\": 4.0}\\\"\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"\\\"odds\\\" MUST be in the format {\\\"home\\\": 1.95, \\\"draw\\\": 3.2, \\\"away\\\": 4.0}\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"ODDS\",\n    \"event_id\": \"ev456\",\n    \"odds\": {\n        \"home\": 1.95,\n        \"away\": 4.0\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-beta/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-beta",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Beta_ODDS_NEGATIVE_VALUE",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is \\\"Odds for \\\"draw\\\" MUST be a number greater than 1.0\\\"\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"Odds for \\\"draw\\\" MUST be a number greater than 1.0\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"ODDS\",\n    \"event_id\": \"ev456\",\n    \"odds\": {\n        \"home\": 1.95,\n        \"draw\": -3.2,\n        \"away\": 4.0\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-beta/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-beta",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Beta_SETTLEMENT_WITHOUT_RESULT",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is \\\"result is mandatory for settlement messages\\\"\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"result is mandatory for settlement messages\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"type\": \"SETTLEMENT\",\n    \"event_id\": \"ev456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-beta/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-beta",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Beta_MALFORMED_JSON",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Message contains \\\"JSON parse error\\\"\", function () {",
+                  "    pm.expect(pm.response.text()).to.include(\"JSON parse error\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"type\": \"ODDS\", \"event_id\": ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-beta/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-beta",
+                "feed"
+              ]
+            }
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
     },
     {
-      "name": "BetaFeed_BET_SETTLEMENT",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "// BET_SETTLEMENT message\r\n{\r\n    \"type\": \"SETTLEMENT\",\r\n    \"event_id\": \"ev456\",\r\n    \"result\": \"away\" // One of \"home\", \"draw\", or \"away\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
+      "name": "HTTP errors",
+      "description": "Wrong HTTP usage must keep the standard status instead of becoming a 500.",
+      "item": [
+        {
+          "name": "Alpha_GET_NOT_ALLOWED",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 405 Method Not Allowed\", function () {",
+                  "    pm.response.to.have.status(405);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is \\\"Method 'GET' is not supported.\\\"\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"Method 'GET' is not supported.\");",
+                  "});"
+                ]
+              }
             }
-          }
-        },
-        "url": {
-          "raw": "localhost:8080/provider-beta/feed",
-          "host": [
-            "localhost"
           ],
-          "port": "8080",
-          "path": [
-            "provider-beta",
-            "feed"
-          ]
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/provider-alpha/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-alpha",
+                "feed"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Beta_TEXT_PLAIN_NOT_SUPPORTED",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status is 415 Unsupported Media Type\", function () {",
+                  "    pm.response.to.have.status(415);",
+                  "});",
+                  "",
+                  "pm.test(\"Message is \\\"Content-Type 'text/plain;charset=UTF-8' is not supported.\\\"\", function () {",
+                  "    pm.expect(pm.response.text()).to.eql(\"Content-Type 'text/plain;charset=UTF-8' is not supported.\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "ODDS ev456"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/provider-beta/feed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "provider-beta",
+                "feed"
+              ]
+            }
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
     }
   ]
 }

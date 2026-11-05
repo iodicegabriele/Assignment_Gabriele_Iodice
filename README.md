@@ -34,6 +34,27 @@ java -jar build/libs/Assignment_Gabriele_Iodice-0.0.1-SNAPSHOT.jar
 The suite contains unit tests for the converters, `@WebMvcTest` tests for the controllers and
 an end-to-end test that runs the whole application with the sample messages of the assignment.
 
+### Postman API tests
+
+[`AssessmentGabrieleIodice.postman_collection.json`](AssessmentGabrieleIodice.postman_collection.json)
+contains the valid sample messages and the invalid inputs (wrong outcomes, missing fields, unknown
+message types, missing or invalid odds, malformed JSON, wrong method or content type). Every request
+has a post-response script that checks the status code and the exact error message.
+
+Import it in Postman, or run it from the command line against a running service:
+
+```bash
+npx newman run AssessmentGabrieleIodice.postman_collection.json --env-var baseUrl=http://localhost:8080
+```
+
+### Continuous integration
+
+- `.github/workflows/ci.yml`: on every push and pull request, runs the unit tests, starts the
+  service and runs the Postman collection with Newman.
+- `.github/workflows/claude-code-review.yml`: on every push to a branch with an open pull
+  request, Claude reviews the change and comments on the pull request
+  (needs the `ANTHROPIC_API_KEY` repository secret).
+
 ## Endpoints
 
 Both endpoints accept `POST` with `Content-Type: application/json`, one message per request.
