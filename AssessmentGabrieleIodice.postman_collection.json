@@ -1,0 +1,122 @@
+{
+  "info": {
+    "_postman_id": "00fe4a00-867e-4b40-9224-e1ec5ef4e5da",
+    "name": "AssessmentGabrieleIodice",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "2085003"
+  },
+  "item": [
+    {
+      "name": "AlphaFeed_ODD_UPDATE",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"msg_type\": \"odds_update\",\r\n    \"event_id\": \"ev123\",\r\n    \"values\": {\r\n        \"1\": 2.0,\r\n        \"X\": 3.1,\r\n        \"2\": 3.8\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/provider-alpha/feed",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "provider-alpha",
+            "feed"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AlphaFeed_BET_SETTLEMENT",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"msg_type\": \"settlement\",\r\n    \"event_id\": \"ev123\",\r\n    \"outcome\": \"X\" // One of \"1\", \"X\", or \"2\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/provider-alpha/feed",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "provider-alpha",
+            "feed"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "BetaFeed_ODDS_UPDATES",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "// ODDS_CHANGE message\r\n{\r\n    \"type\": \"ODDS\",\r\n    \"event_id\": \"ev456\",\r\n    \"odds\": {\r\n        \"home\": 1.95,\r\n        \"draw\": 3.2,\r\n        \"away\": 4.0\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/provider-beta/feed",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "provider-beta",
+            "feed"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "BetaFeed_BET_SETTLEMENT",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "// BET_SETTLEMENT message\r\n{\r\n    \"type\": \"SETTLEMENT\",\r\n    \"event_id\": \"ev456\",\r\n    \"result\": \"away\" // One of \"home\", \"draw\", or \"away\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/provider-beta/feed",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "provider-beta",
+            "feed"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
